@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:weatherapp/constants.dart';
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -10,8 +12,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String location = '';
-  String apiKey = 'b34fddd3dae4a2eb0ad363b62f98ba1e';
+  String? location = 'Nairobi';
+  String? apiKey = 'b34fddd3dae4a2eb0ad363b62f98ba1e';
   Map weatherData = {};
 
   Future<void> _fetchWeatherData() async {
@@ -21,6 +23,7 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         weatherData = json.decode(response.body);
       });
+      print(weatherData);
     } else {
       print('error');
     }
@@ -31,7 +34,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Weather App'),
+          title: const Center(child: Text('GeoSearch')),
         ),
         body: Column(
           children: [
@@ -47,10 +50,13 @@ class _MyAppState extends State<MyApp> {
               onPressed: _fetchWeatherData,
               child: const Text('Get Weather'),
             ),
-            // Text('${weatherData['main']['temp']} °F'),
-            // Image.network(
-            //     'https://openweathermap.org/img/w/${weatherData['weather'][0]['icon']}.png'),
-            // Text('${weatherData['weather'][0]['description']}'),
+            const SizedBox(
+              height: 20,
+            ),
+            Text('${weatherData['main']['temp']} °F'),
+            Image.network(
+                'https://openweathermap.org/img/w/${weatherData['weather'][0]['icon']}.png'),
+            Text('${weatherData['weather'][0]['description']}'),
           ],
         ),
       ),
