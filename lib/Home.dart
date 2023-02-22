@@ -12,6 +12,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    _fetchWeatherData();
+  }
+
   String? location = 'Nairobi';
   String? apiKey = 'b34fddd3dae4a2eb0ad363b62f98ba1e';
   Map weatherData = {};
@@ -33,13 +39,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Center(child: Text('GeoSearch')),
-        ),
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(5),
               child: TextField(
                 onChanged: (value) {
                   location = value;
@@ -53,7 +56,14 @@ class _MyAppState extends State<MyApp> {
             const SizedBox(
               height: 20,
             ),
+            Text('${weatherData['name']}'),
+            const SizedBox(
+              height: 20,
+            ),
             Text('${weatherData['main']['temp']} °F'),
+            const SizedBox(
+              height: 20,
+            ),
             Image.network(
                 'https://openweathermap.org/img/w/${weatherData['weather'][0]['icon']}.png'),
             Text('${weatherData['weather'][0]['description']}'),
